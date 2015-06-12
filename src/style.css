@@ -1,0 +1,4 @@
+@charset "utf-8";
+#JS_form span { display: block; padding: 4px; }
+input[type="text"] { width: 250px; }
+button { display: inline-block; padding-right: 10px; }
