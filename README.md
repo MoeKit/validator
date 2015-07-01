@@ -1,4 +1,4 @@
-# validator [![0.0.1](https://moekit.timo.today/badge/validator)](https://moekit.timo.today/package/validator)
+# validator [![spm version](https://moekit.timo.today/badge/validator)](https://moekit.timo.today/package/validator)
 
 ---
 
@@ -10,8 +10,8 @@
 > 2. 存在`required`属性，则必须验证规则
 > 3. 存在`pattern`属性，同时存在`data-valid`属性时，每次都会用`pattern`的正则规则来验证
 > 4. 存在`min`、`max`属性，用于验证长度规则（中文算两个字符）
-> 5. 存在`data-alt`属性，验证失败的文案，如果当前标签的sibling存在validator-info类名时，该文案会赋值到此sibling中
-> 6. 存在`data-hint`属性，验证成功的文案，如果当前标签的sibling存在validator-info类名时，该文案会赋值到此sibling中
+> 5. 存在`data-alt`属性，验证失败的文案，如果当前标签的sibling存在`validator-info`类名时，该文案会赋值到此sibling中
+> 6. 存在`data-hint`属性，验证成功的文案，如果当前标签的sibling存在`validator-info`类名时，该文案会赋值到此sibling中
 
 ```html
 <div id="JS_form">
@@ -33,10 +33,13 @@
 + `on`事件，用于绑定`验证失败事件`，`验证成功事件`
 	+ `error` 验证失败回调事件，带参数`function`，其中function返回值有name, dom, alt
 	+ `success` 验证通过回调事件，带参数`function`
-+ `emit`事件，用于绑定或解绑`自定义验证事件`，带3个参数
-	+ Param 1: `string`值必须固定是`onvalid`or`offvalid`
-	+ Param 2: `string`对应验证标签中的[`data-valid`属性]，用于确定此自定义事件用于何处的标签
-	+ Param 3: `function`函数，其中function带有形参val,dom; 用于绑定自定义验证事件函数，此函数必须带有返回值为true or false，`解绑时此参数不需要`
++ `onvalid`事件，用于绑定`自定义验证事件`，带3个参数
+	+ Param 1: `string`自定义验证事件的名称，可用于验证标签中的[`data-valid`属性]
+	+ Param 2: `function`函数，其中function带有形参val,dom; 用于绑定自定义验证事件函数，此函数必须带有返回值为true or false
+	+ Param 3: `function`函数，成功绑定事件的回调
++ `onvalid`事件，用于解绑`自定义验证事件`，带2个参数
+	+ Param 1: `string`自定义验证事件的名称
+	+ Param 2: `function`函数，成功绑定事件的回调
 + `verify`事件，用于开始执行验证，验证通过则调用`on`的`success`事件，反之调用`on`的`error`事件
 	+ [Param 1]: `function`用于验证通过回调，会阻止`on`的`success`事件的调用
 	+ [Param 2]: 调试使用，`true`时直接跳过验证，直接进入验证通过事件

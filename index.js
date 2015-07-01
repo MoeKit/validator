@@ -54,40 +54,65 @@ Validator.prototype.init = function(option){
 		}
 	}
 	// 收集自定义事件
-	this.on("onvalid", function(_Type, cb){
-		_this.custom[_Type] = cb
-	});
-	this.on("offvalid", function(_Type){
-		_this.custom[_Type] && delete _this.custom[_Type]
-	});
+	// this.on("onvalid", function(_Type, cb){
+	// 	_this.custom[_Type] = cb
+	// });
+	// this.on("offvalid", function(_Type){
+	// 	_this.custom[_Type] && delete _this.custom[_Type]
+	// });
 
-	for( var i=0; i<_this.validator.length; i++ ){
-		console.log( _this.validator[i] );
-		_this.validator[i].addEventListener("blur",function(){
-			_this.verifyOne(this,false);
-		},false);
-	}
-
+	// for( var i=0; i<_this.validator.length; i++ ){
+	// 	_this.validator[i].addEventListener("blur",function(){
+	// 		_this.verifyOne(this,false);
+	// 	},false);
+	// }
+	this.eventListener();
 	return this
 }
-Validator.prototype.verify = function(cb, bool){
-	try{
+// 如果存在兄弟类名showOnClass，则获取焦点时移除showOnClass的值
+Validator.prototype.eventListener = function(){
 	var _this = this;
-	for( var i=0; i<=_this.validator.length; i++ ){
-		// 验证直至最后一个没有异常退出，证明验证通过，执行success
-		if( i == _this.validator.length || bool === true || _this.pass === true ){
-			!!cb ? cb() : _this.emit("success")
-			break
-		}
-		if( _this.verifyOne( _this.validator[i], true ) ){
-			break
+	for( var i=0; i<=_this.validator.length-1; i++ ){
+		if( (!!_this.validator[i].getAttribute("data-alt") || !!_this.validator[i].getAttribute("data-hint")) 
+				&& !!_this.validator[i].parentNode.querySelector("."+_this.showOnClass) ){
+			_this.validator[i].ind = i;
+			_this.validator[i].addEventListener("focus", function(){
+				_this.validator[this.ind].parentNode.querySelector("."+_this.showOnClass).innerText = "";
+			}, false);
 		}
 	}
 	return _this;
+}
+// 收集自定义事件
+Validator.prototype.onvalid = function(_Type, cb, cb1){
+	this.custom[_Type] = cb;
+	this.custom[_Type] && cb1 && cb1();
+	return this;
+}
+// 移除自定义事件
+Validator.prototype.offvalid = function(_Type, cb){
+	this.custom[_Type] && delete this.custom[_Type] && cb && cb();
+	return this;
+}
+Validator.prototype.verify = function(cb, bool){
+	try{
+		var _this = this;
+		for( var i=0; i<=_this.validator.length; i++ ){
+			// 验证直至最后一个没有异常退出，证明验证通过，执行success
+			if( i == _this.validator.length || bool === true || _this.pass === true ){
+				!!cb ? cb() : _this.emit("success")
+				break
+			}
+			if( _this.verifyOne( _this.validator[i], true ) ){
+				break
+			}
+		}
+		return _this;
 	} catch(err){
 		throw err;
 	}
 }
+// 对每一个表单元素进行验证
 Validator.prototype.verifyOne = function(verify_dom, isFocus){
 	var _this = this;
 	// 是否需要验证
@@ -115,13 +140,19 @@ Validator.prototype.verifyOne = function(verify_dom, isFocus){
 	 */
 	var dom = verify_dom.parentNode.querySelectorAll("."+_this.showOnClass);
 	if( (!!_Required || !!_Val) && !_this.requiredVerify(_Type, _Val, _Min, _Max, verify_dom) ){
-		if( _this.isFocus === true && isFocus === true ){ verify_dom.focus() }
+		
 		if( !!_Alt ){
 			if( dom.length > 0 && !!dom[0] ){
 				dom[0].raw = (dom[0].raw === "" || (!!dom[0].raw && dom[0].raw.length>0)) ? dom[0].raw : dom[0].innerText;
 				dom[0].innerText = _Alt;
-			} else _this.emit("error", _Field, verify_dom, _Alt)
-		} else _this.emit("error", _Field, verify_dom)
+			} else {
+				_this.emit("error", _Field, verify_dom, _Alt)
+				if( _this.isFocus === true && isFocus === true ){ verify_dom.focus() }
+			}
+		} else {
+			_this.emit("error", _Field, verify_dom) 
+			if( _this.isFocus === true && isFocus === true ){ verify_dom.focus() }
+		}
 		return true
 	} else {
 		if( dom.length > 0 && !!dom[0] ){
@@ -144,7 +175,8 @@ Validator.prototype.requiredVerify = function(type, val, min, max, dom){
 	function isBelongRange(val, min, max){
 		if( !min && !max ) return true;
 		val = val.replace(/[^\x00-\xff]/g,"**");
-		return (!!min && !!max ? (val.length>=min && val.length<=max?true: false) : (val.length>=min || val.length<=max?true: false) )
+		console.log( val.length,min,max, val.length<=max );
+		return (!!min && !!max ? (val.length>=min && val.length<=max?true: false) : ((!!min&&val.length>=min) || (!!max&&val.length<=max)?true: false) )
 	}
 }
 Validator.prototype.is = function(type, val, min, max, dom){

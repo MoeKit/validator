@@ -1,4 +1,9 @@
 @charset "utf-8";
-#JS_form span { display: block; padding: 4px; }
-input[type="text"] { width: 250px; }
+input { margin: 0; padding: 0; border: 0; }
+input[type="text"] { float: left; margin-bottom: 8px; width: 220px; height: 30px; border: 1px solid #999; border-radius: 4px; text-indent: 5px; color: #999; }
 button { display: inline-block; padding-right: 10px; }
+.form-item { height: 40px; }
+.demo-btn { float: left; width: 222px; margin: 0px; }
+.type-name { float: left; display: block; height: 32px; line-height: 32px; width: 80px; text-align: right; color: #333; }
+.type-view { display: inline-block; height: 32px; line-height: 32px; text-align: left; color: #bbb; }
+.validator-info { position: relative; color: rgb(228, 92, 92); padding-left: 5px; }
