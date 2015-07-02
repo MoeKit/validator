@@ -37,8 +37,8 @@
 	+ Param 1: `string`自定义验证事件的名称，可用于验证标签中的[`data-valid`属性]
 	+ Param 2: `function`函数，其中function带有形参val,dom; 用于绑定自定义验证事件函数，此函数必须带有返回值为true or false
 	+ Param 3: `function`函数，成功绑定事件的回调
-+ `onvalid`事件，用于解绑`自定义验证事件`，带2个参数
-	+ Param 1: `string`自定义验证事件的名称
++ `onvalid`事件，用于解绑`验证事件`，带2个参数
+	+ Param 1: `string`验证事件的名称
 	+ Param 2: `function`函数，成功绑定事件的回调
 + `verify`事件，用于开始执行验证，验证通过则调用`on`的`success`事件，反之调用`on`的`error`事件
 	+ [Param 1]: `function`用于验证通过回调，会阻止`on`的`success`事件的调用

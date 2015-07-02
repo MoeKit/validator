@@ -175,7 +175,6 @@ Validator.prototype.requiredVerify = function(type, val, min, max, dom){
 	function isBelongRange(val, min, max){
 		if( !min && !max ) return true;
 		val = val.replace(/[^\x00-\xff]/g,"**");
-		console.log( val.length,min,max, val.length<=max );
 		return (!!min && !!max ? (val.length>=min && val.length<=max?true: false) : ((!!min&&val.length>=min) || (!!max&&val.length<=max)?true: false) )
 	}
 }
