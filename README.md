@@ -1,4 +1,4 @@
-# validator [![spm version](https://moekit.timo.today/badge/validator)](https://moekit.timo.today/package/validator)
+# validator [![spm version](https://moekit.com/badge/validator)](https://moekit.com/package/validator)
 
 ---
 
@@ -63,6 +63,7 @@
 + datetime: 日期时间格式`2015-01-01 11:56` or `2015-01-01 11:56:29`
 + idcard: 身份证格式 
 + url: 网址格式 
++ wechatid: 微信号（微信账号仅支持6-20个字母、数字、下划线或减号，以字母开头） 
 
 ## 规则优先级说明
 绑定规则emit("onvalid", func) > pattern属性正则规则 > 初始化参数custom规则 > 内置正则规则

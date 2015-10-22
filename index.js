@@ -12,21 +12,22 @@ Validator.prototype.init = function(option){
 	this.validator = this.dom.querySelectorAll('[data-valid], [name]')
 	this.custom = {}
 	this.showOnClass = option.showOnClass || "validator-info"
-	this.pass = option.pass || false
-	this.isFocus = option.isFocus || true
+	this.pass = option.pass === true ? true : false
+	this.isFocus = option.isFocus === false ? false : true
 	this.reg = {
 		number: /^-?\d+(\.\d+)?$/, // 数字 22, 22.2 => true; 22. => false;
 		int: /^-?\d+$/, // 整数
 		mobile: /^1[3,4,5,7,8][0-9]{9}$/, // 手机号码 13800138000
 		phone: /^((\d{3}|\d{4})-(\d{7}|\d{8}))|((\d{3}|\d{4})-(\d{7}|\d{8})-\d{4})$/, // 电话号码 020-34343434
 		mobilephone: /^(1[3,4,5,7,8][0-9]{9})|((\d{3}|\d{4})-(\d{7}|\d{8}))|((\d{3}|\d{4})-(\d{7}|\d{8})-\d{4})$/,
-		zipcode: /^[1-9]\d{5}(?!\d)$/, // 邮政编码 560310
+		zipcode: /^\d{6}$/, // 邮政编码 560310, 056300
 		email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/, // 邮箱 123456@qq.com
 		date: /^(19\d{2}|2\d{3})[-\/](0[0-9]|1[0-2])[-\/]([0-2][0-9]|3[0-1])$/, // 日期-年月日 2015-02-03 2015/02/03
 		time: /^(([0-1][0-9])|(2[0-3]))(:[0-5][0-9]){1,2}$/, // 日期-时分秒 12:50 12:50:23
 		datetime: /^(19\d{2}|2\d{3})[-\/](0[0-9]|1[0-2])[-\/]([0-2][0-9]|3[0-1])\s([0-1][0-9]|2[0-3])(:[0-5][0-9]){1,2}$/,
 		idcard: /^\d{18}|(\d{17}(\d|X|x))$/, // 只允许18位的身份证
-		url: /^((http|ftp|https):\/\/)?[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#]*[\w\-\@?^=%&amp;\/~\+#]?)$/
+		url: /^((http|ftp|https):\/\/)?[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#]*[\w\-\@?^=%&amp;\/~\+#]?)$/,
+		wechatid: /^[a-zA-Z][a-zA-Z0-9_\-]{5,19}$/
 	}
 	// reg转为custom 
 	for( var i in _this.reg ){

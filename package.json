@@ -1,13 +1,13 @@
 {
   "name": "validator",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "the validator is used to form validation",
   "keywords": [],
   "homepage": "",
   "author": "wangcl",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/MoeKit/validator.git"
   },
   "bugs": {
     "url": ""

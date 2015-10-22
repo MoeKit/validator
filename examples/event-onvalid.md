@@ -1,6 +1,6 @@
 # 绑定自定义校验事件
 
-- order: 12
+- order: 13
 ---
 <link rel="stylesheet" type="text/css" href="./../src/style.css">
 

@@ -117,6 +117,16 @@ describe('validator', function() {
 		expect(new Validator().is("url", "http://bbs.bozhong.com")).to.be(true);
 		expect(new Validator().is("url", "iamurl")).to.be(false);
 	});
+	it('校验内置规则-wechatid', function() {
+		expect(new Validator().is("wechatid", "a123456")).to.be(true);
+		expect(new Validator().is("wechatid", "A1234w6")).to.be(true);
+		expect(new Validator().is("wechatid", "a123_456")).to.be(true);
+		expect(new Validator().is("wechatid", "a123-456")).to.be(true);
+		expect(new Validator().is("wechatid", "a1_3-456")).to.be(true);
+		expect(new Validator().is("wechatid", "123a567")).to.be(false);
+		expect(new Validator().is("wechatid", "12-4567")).to.be(false);
+		expect(new Validator().is("wechatid", "12345_7")).to.be(false);
+	});
 	it('设置并校验min,max规则', function() {
 		$("body").append('<div id="JS_min_max" style="display: none;"><input type="text" name="account" min="3" max="7" value="12345" required /></div>');
 		new Validator({
