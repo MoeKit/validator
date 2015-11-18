@@ -12,11 +12,13 @@
 > 4. 存在`min`、`max`属性，用于验证长度规则（中文算两个字符）
 > 5. 存在`data-alt`属性，验证失败的文案，如果当前标签的sibling存在`validator-info`类名时，该文案会赋值到此sibling中
 > 6. 存在`data-hint`属性，验证成功的文案，如果当前标签的sibling存在`validator-info`类名时，该文案会赋值到此sibling中
+> 7. 存在`type`属性，且其值为`form`时，非表单元素可以模拟表单元素进行校验（如: div）
 
 ```html
 <div id="JS_form">
 	<input class="validator" date-valid="qq" pattern="^\d*$"
 		 min="5" max="11" name="qq" data-alt="qq必须是5-11位数字" type="text" />
+	<div class="simulate-input" name="myname" value="" type="form" required>我是一个虚拟的表单元素</div>
 	<span class="validator-info"></span>
 	<button id="JS_submit">提交</button>
 </div>
@@ -67,3 +69,10 @@
 
 ## 规则优先级说明
 绑定规则emit("onvalid", func) > pattern属性正则规则 > 初始化参数custom规则 > 内置正则规则
+
+## 注意
++ select校验时，option的value必须设置，就算为空也要设置为空
++ 非表单元素校验时必须增加`type="form"`, 别忘了增加`required`和`name`属性才能校验
+
+## @todo
++ select校验、非元素表单校验少了单元测试

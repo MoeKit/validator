@@ -1,6 +1,8 @@
 @charset "utf-8";
 input { margin: 0; padding: 0; border: 0; }
 input[type="text"] { float: left; margin-bottom: 8px; width: 220px; height: 30px; border: 1px solid #999; border-radius: 4px; text-indent: 5px; color: #999; }
+select,
+.simulate-input { float: left; margin-bottom: 8px; width: 220px; height: 30px; line-height: 30px; border: 1px solid #999; border-radius: 4px; text-indent: 5px; color: #666; }
 button { display: inline-block; padding-right: 10px; }
 .form-item { height: 40px; }
 .demo-btn { float: left; width: 222px; margin: 0px; }
