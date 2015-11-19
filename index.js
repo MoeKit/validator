@@ -115,7 +115,6 @@ Validator.prototype.verify = function(cb, bool){
 }
 // 对每一个表单元素进行验证
 Validator.prototype.verifyOne = function(verify_dom, isFocus){
-	console.log( verify_dom, verify_dom.value );
 	var _this = this;
 	// 是否需要验证
 	var _Required = verify_dom.getAttribute("required")
@@ -126,7 +125,6 @@ Validator.prototype.verifyOne = function(verify_dom, isFocus){
 	var _Field = verify_dom.getAttribute("name") || "name"
 	// 验证的值
 	var _Val = verify_dom.getAttribute("type") === "form" ? verify_dom.getAttribute("value") : verify_dom.value;
-	console.log( !!_Val );
 	// 验证的值的最小长度
 	var _Min = verify_dom.getAttribute("min")
 	// 验证的值的最大长度
@@ -183,7 +181,7 @@ Validator.prototype.requiredVerify = function(type, val, min, max, dom){
 }
 Validator.prototype.is = function(type, val, min, max, dom){
 	if( !this.custom[type] ){
-		console.log(type+"对应的验证规则不存在");
+		if( window.console) console.log(type+"对应的验证规则不存在");
 		return false;
 	}
 	return this.requiredVerify(type, val, min, max, dom);
