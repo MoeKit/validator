@@ -32,24 +32,24 @@ Validator.prototype.init = function(option){
 	// reg转为custom 
 	for( var i in _this.reg ){
 		_this.custom[i] = (function(){
-			var key = i;
+			var key = i
 			return function(val, dom){ return _this.reg[key].test(val) }
 		}())
 	}
 	// 初始化参数custom存入custom
 	if( option.custom instanceof Object ){
 		for( var i in option.custom ){
-			this.custom[i] = option.custom[i];
+			this.custom[i] = option.custom[i]
 		}
 	}
 	// pattern存入type并转为custom
-	var pattern = this.dom.querySelectorAll('[pattern]');
+	var pattern = this.dom.querySelectorAll('[pattern]')
 	for(var i=0; i<pattern.length; i++){
-		var type = pattern[i].getAttribute("data-valid");
+		var type = pattern[i].getAttribute("data-valid")
 		if( !!type ){
-			this.reg[type] = new RegExp(pattern[i].getAttribute("pattern"));
+			this.reg[type] = new RegExp(pattern[i].getAttribute("pattern"))
 			this.custom[type] = (function(){
-				var key = type;
+				var key = type
 				return function(val, dom){ return _this.reg[key].test(val) }
 			}())
 		}
@@ -67,7 +67,7 @@ Validator.prototype.init = function(option){
 	// 		_this.verifyOne(this,false);
 	// 	},false);
 	// }
-	this.eventListener();
+	this.eventListener()
 	return this
 }
 // 如果存在兄弟类名showOnClass，则获取焦点时移除showOnClass的值
@@ -76,9 +76,9 @@ Validator.prototype.eventListener = function(){
 	for( var i=0; i<=_this.validator.length-1; i++ ){
 		if( (!!_this.validator[i].getAttribute("data-alt") || !!_this.validator[i].getAttribute("data-hint")) 
 				&& !!_this.validator[i].parentNode.querySelector("."+_this.showOnClass) ){
-			_this.validator[i].ind = i;
+			_this.validator[i].ind = i
 			_this.validator[i].addEventListener("focus", function(){
-				_this.validator[this.ind].parentNode.querySelector("."+_this.showOnClass).innerText = "";
+				_this.validator[this.ind].parentNode.querySelector("."+_this.showOnClass).innerText = ""
 			}, false);
 		}
 	}
@@ -86,18 +86,19 @@ Validator.prototype.eventListener = function(){
 }
 // 收集自定义事件
 Validator.prototype.onvalid = function(_Type, cb, cb1){
-	this.custom[_Type] = cb;
-	this.custom[_Type] && cb1 && cb1();
-	return this;
+	this.custom[_Type] = cb
+	this.custom[_Type] && cb1 && cb1()
+	return this
 }
 // 移除自定义事件
 Validator.prototype.offvalid = function(_Type, cb){
-	this.custom[_Type] && delete this.custom[_Type] && cb && cb();
-	return this;
+	this.custom[_Type] && delete this.custom[_Type] && cb && cb()
+	return this
 }
 Validator.prototype.verify = function(cb, bool){
 	try{
 		var _this = this;
+		_this.validator = _this.dom.querySelectorAll('[data-valid], [name]')
 		for( var i=0; i<=_this.validator.length; i++ ){
 			// 验证直至最后一个没有异常退出，证明验证通过，执行success
 			if( i == _this.validator.length || bool === true || _this.pass === true ){
@@ -108,23 +109,23 @@ Validator.prototype.verify = function(cb, bool){
 				break
 			}
 		}
-		return _this;
+		return _this
 	} catch(err){
 		throw err;
 	}
 }
 // 对每一个表单元素进行验证
 Validator.prototype.verifyOne = function(verify_dom, isFocus){
-	var _this = this;
+	var _this = this
 	// 是否需要验证
 	var _Required = verify_dom.getAttribute("required")
-	var _Required = _Required === "" ? "required" : _Required;
+	var _Required = _Required === "" ? "required" : _Required
 	// 验证类型
 	var _Type = verify_dom.getAttribute("data-valid")
 	// 验证便签字段
-	var _Field = verify_dom.getAttribute("name") || "name"
+	var _Field = verify_dom.getAttribute("name")
 	// 验证的值
-	var _Val = verify_dom.getAttribute("type") === "form" ? verify_dom.getAttribute("value") : verify_dom.value;
+	var _Val = verify_dom.getAttribute("type") === "form" ? verify_dom.getAttribute("value") : verify_dom.value
 	// 验证的值的最小长度
 	var _Min = verify_dom.getAttribute("min")
 	// 验证的值的最大长度
@@ -139,7 +140,7 @@ Validator.prototype.verifyOne = function(verify_dom, isFocus){
 	/*
 	 * 表单验证不通过的条件，如下：
 	 */
-	var dom = verify_dom.parentNode.querySelectorAll("."+_this.showOnClass);
+	var dom = verify_dom.parentNode.querySelectorAll("."+_this.showOnClass)
 	if( (!!_Required || !!_Val) && !_this.requiredVerify(_Type, _Val, _Min, _Max, verify_dom) ){
 		
 		if( !!_Alt ){
